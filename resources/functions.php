@@ -178,7 +178,29 @@ function login_user()
 }
 
 
+function send_message()
+{
+    if (isset($_POST['submit'])) {
+
+        $to = "cdengineering2014@gmail.com";
+        $fromname = $_POST['name'];
+        $subject = $_POST['subject'];
+        $email = $_POST['email'];
+        $message = $_POST['message'];
+
+        $headers = "From: {$fromname} {$email}";
 
 
+        $result = mail($to, $subject, $message, $headers);
+
+        if ($result) {
+            set_message("Your Message has been sent");
+            echo "Your Message has been sent";
+        } else {
+            set_message("Your Message has not been sent");
+            echo "Your Message has not been sent";
+        }
+    }
+}
 
 ?>
