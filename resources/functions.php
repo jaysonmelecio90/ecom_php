@@ -33,7 +33,7 @@ function fetch_array($result)
 }
 
 
-
+/*************FRONT END*****************/
 //get products
 
 function get_products()
@@ -49,7 +49,7 @@ function get_products()
                        <a  href="item.php?id={$row['product_id']}"> <img src="{$row['product_image']}" alt=""> </a>
                         <div class="caption">
                             <h4 class="pull-right">&#8369;{$row['product_price']}</h4>
-                            <h4><a href="product.html">{$row['product_title']}</a>
+                            <h4><a href="item.php?id={$row['product_id']}">{$row['product_title']}</a>
                             </h4>
                             <p>See more snippets like this online store item at <a target="_blank"
                                     href="http://www.bootsnipp.com">Bootsnipp - http://bootsnipp.com</a>.</p>
@@ -68,7 +68,20 @@ function get_products()
 }
 
 
+//get categories
 
+function get_categories()
+{
+
+    $query = query('SELECT * FROM categories');
+    confirm($query);
+    while ($row = fetch_array($query)) {
+        $category_link = <<<DELIMETER
+             <a href='category.php?id={$row['cat_id']}' class='list-group-item'>{$row['cat_title']}</a>
+        DELIMETER;
+        echo $category_link;
+    }
+}
 
 
 
