@@ -1,4 +1,9 @@
 <?php
+
+
+
+
+
 function set_message($msg)
 {
     if (!empty($msg)) {
@@ -70,7 +75,7 @@ function get_products()
                                     href="http://www.bootsnipp.com">Bootsnipp - http://bootsnipp.com</a>.</p>
 
                         <a class="btn btn-primary" target="_blank"
-                            href="item.php?id={$row['product_id']}">Add to Cart</a>
+                            href="cart.php?add={$row['product_id']}">Add to Cart</a>
 
                         </div>
 
@@ -178,11 +183,12 @@ function login_user()
 }
 
 
+
 function send_message()
 {
     if (isset($_POST['submit'])) {
 
-        $to = "cdengineering2014@gmail.com";
+        $to = 'cdengineering2014@gmail.com';
         $fromname = $_POST['name'];
         $subject = $_POST['subject'];
         $email = $_POST['email'];
@@ -202,5 +208,7 @@ function send_message()
         }
     }
 }
+
+
 
 ?>

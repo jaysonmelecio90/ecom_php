@@ -25,7 +25,6 @@
 
                 <?php get_products(); ?>
 
-
             </div>
 
         </div>
