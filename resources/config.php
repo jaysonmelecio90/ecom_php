@@ -2,7 +2,7 @@
 
 ob_start(); // Output Buffering Start
 session_start(); // Session Start
-session_destroy(); // Destroy Session
+//session_destroy(); // Destroy Session
 
 defined('DS') ? null : define('DS', DIRECTORY_SEPARATOR);
 
