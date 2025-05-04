@@ -48,6 +48,11 @@ function cart()
     $total = 0;
     $item_quantity = 0;
 
+    $item_name = 1;
+    $item_number = 1;
+    $amount = 1;
+    $quantity = 1;
+
     foreach ($_SESSION as $name => $value) {
         if ($value > 0) {
             if (substr($name, 0, 8) == "product_") {
@@ -55,19 +60,19 @@ function cart()
                 $length = strlen($name) - 8;
                 $id = substr($name, 8, $length);
 
-                $query = query("SELECT * FROM products WHERE product_id=" . escape_string($id) . " ");
+                $query = query("SELECT * FROM products WHERE product_id =" . escape_string($id) . " ");
                 confirm($query);
 
                 while ($row = fetch_array($query)) {
 
                     $sub = $row['product_price'] * $value;
                     $item_quantity += $value;
-                    $item_name = $row['product_title'];
-                    $item_price = $row['product_price'];
+
                     $product = <<<DELIMETER
+
                     <tr>
-                        <td>{$item_name}</td>
-                        <td>&#8369;{$item_price}</td>
+                        <td>{$row['product_title']}</td>
+                        <td>&#8369;{$row['product_price']}</td>
                         <td>{$value} pcs</td>
                         <td>&#8369;{$sub}</td>
                         <td>
@@ -76,9 +81,19 @@ function cart()
                         <a class='btn btn-danger' href="cart.php?delete={$row['product_id']}"><span class='glyphicon glyphicon-remove'></span></a>
                         </td>
                     </tr>
+                    
+                    <input type="hidden" name="item_name_{$item_name}" value="{$row['product_title']}"> 
+                    <input type="hidden" name="item_number_{$item_number}" value="{$row['product_id']}"> 
+                    <input type="hidden" name="amount_{$amount}" value="{$row['product_price']}"> 
+                    <input type="hidden" name="quantity_{$quantity}" value="{$value}"> 
 
                     DELIMETER;
                     echo $product;
+
+                    $item_name++;
+                    $item_number++;
+                    $amount++;
+                    $quantity++;
                 }
 
                 $_SESSION['item_total'] = $total += $sub;
@@ -88,5 +103,22 @@ function cart()
     }
 
 }
+
+function show_paypal()
+{
+    if (isset($_SESSION['item_quantity']) && $_SESSION['item_quantity'] >= 1) {
+
+        $paypal_button = <<<DELIMETER
+
+            <input type="image" name="upload" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynow_LG.gif"
+            alt="PayPal - The safer, easier way to pay online">
+            <img alt="" width="1" height="1" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif">
+        
+            DELIMETER;
+        return $paypal_button;
+    }
+}
+
+
 
 ?>
