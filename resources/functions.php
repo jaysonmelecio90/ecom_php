@@ -75,7 +75,7 @@ function get_products()
                                     href="http://www.bootsnipp.com">Bootsnipp - http://bootsnipp.com</a>.</p>
 
                         <a class="btn btn-primary" target="_blank"
-                            href="cart.php?add={$row['product_id']}">Add to Cart</a>
+                            href="../resources/cart.php?add={$row['product_id']}">Add to Cart</a>
 
                         </div>
 
@@ -171,10 +171,12 @@ function login_user()
 
         $query = query("SELECT * FROM users WHERE username = '{$username}' AND password = '{$password}' ");
         confirm($query);
+
         if (mysqli_num_rows($query) == 0) {
             set_message("Your Password or Username is incorrect");
             redirect("login.php");
         } else {
+
             $_SESSION['username'] = $username;
             set_message("Welcome to Admin {$username}");
             redirect("admin/index.php");
@@ -182,6 +184,14 @@ function login_user()
     }
 }
 
+function logout_user()
+{
+    if (isset($_GET['logout'])) {
+        session_start();
+        session_destroy();
+        redirect("index.php");
+    }
+}
 
 
 function send_message()
